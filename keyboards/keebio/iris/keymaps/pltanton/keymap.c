@@ -16,6 +16,12 @@
 #define KC_RSET RESET
 #define KC_RGHT KC_RIGHT
 
+#define KC_BLHU BL_HU
+#define KC_BLSA BL_SA
+#define KC_BLVA BL_VA
+#define KC_BLMD BL_MODE
+#define KC_RTVO RT_VO
+
 enum custom_keycodes {
   DVORAK,
   QWERTY = SAFE_RANGE,
@@ -23,7 +29,15 @@ enum custom_keycodes {
   RAISE,
   ADJUST,
   TGLYT,
+
+  BL_HU,
+  BL_SA,
+  BL_VA,
+  BL_MODE,
+  RT_VO,
 };
+
+enum custom_keycodes rotary_mode = RT_VO;
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -31,7 +45,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //┌────┬────┬────┬────┬────┬────┐            ┌────┬────┬────┬────┬────┬────┐
    GRV , 1  , 2  , 3  , 4  , 5  ,              6  , 7  , 8  , 9  , 0  ,BSPC,
 //├────┼────┼────┼────┼────┼────┤            ├────┼────┼────┼────┼────┼────┤
-   TAB,  Q  , W  , E  , R  , T  ,              Y  , U  , I  , O  , P  ,BSLS,
+   TAB,  Q  , W  , E  , R  , T  ,              Y  , U  , I  , O  , P  ,LBRC,
 //├────┼────┼────┼────┼────┼────┤            ├────┼────┼────┼────┼────┼────┤
    ESC , A  , S  , D  , F  , G  ,              H  , J  , K  , L  ,SCLN,QUOT,
 //├────┼────┼────┼────┼────┼────┼────┐  ┌────┼────┼────┼────┼────┼────┼────┤
@@ -59,7 +73,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //┌────┬────┬────┬────┬────┬────┐            ┌────┬────┬────┬────┬────┬────┐
    GRV ,EXLM, AT ,HASH,DLR ,PERC,             CIRC,AMPR,ASTR,LPRN,RPRN,DEL ,
 //├────┼────┼────┼────┼────┼────┤            ├────┼────┼────┼────┼────┼────┤
-   RSET,____,____, UP ,____,LCBR,             RCBR,PLUS,____,____,____,BSLS,
+   ____,____,____, UP ,____,LCBR,             RCBR,PLUS,____,____,____,BSLS,
 //├────┼────┼────┼────┼────┼────┤            ├────┼────┼────┼────┼────┼────┤
    ____,____,LEFT,DOWN,RGHT,LPRN,             RPRN,EQL, ____,____,____,HOME,
 //├────┼────┼────┼────┼────┼────┼────┐  ┌────┼────┼────┼────┼────┼────┼────┤
@@ -83,18 +97,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
 
-  [_ADJUST] = LAYOUT(
-  //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
-     _______, _______, _______, _______, _______, _______,                            _______, _______, _______, _______, _______, _______,
-  //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     _______, _______, _______, _______, _______, _______,                            _______, _______, _______, _______, _______, _______,
-  //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     _______, _______, _______, _______, _______, _______,                            _______, _______, _______, _______, _______, _______,
-  //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     _______, _______, _______, _______, _______, _______, _______,          _______, _______, _______, _______, _______, _______, _______,
-  //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                    _______, _______, _______,                   _______, _______, _______
-                                // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
+  [_ADJUST] = LAYOUT_kc(
+//┌────┬────┬────┬────┬────┬────┐            ┌────┬────┬────┬────┬────┬────┐
+   ____,____,____,____,____,____,             ____,____,____,____,____,____,
+//├────┼────┼────┼────┼────┼────┤            ├────┼────┼────┼────┼────┼────┤
+   RSET,____,____,____,____,____,             ____,____,____,____,____,____,
+//├────┼────┼────┼────┼────┼────┤            ├────┼────┼────┼────┼────┼────┤
+   ____,____,____,____,____,____,             ____,____,____,____,____,____,
+//├────┼────┼────┼────┼────┼────┼────┐  ┌────┼────┼────┼────┼────┼────┼────┤
+   RTVO,BLVA,BLHU,BLSA,BLMD,____,____,   ____,____,____,____,____,____,____,
+//└────┴────┴────┴──┬─┴──┬─┴──┬─┴──┬─┘  └─┬──┴─┬──┴─┬──┴─┬──┴────┴────┴────┘
+                     ____,____,____,       ____,____,____
+                 // └────┴────┴────┘      └────┴────┴────┘
   )
 };
 
@@ -155,6 +169,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         tap_code16(C(KC_SPC));
       }
       break;
+  	case BL_HU:
+  	case BL_SA:
+  	case BL_VA:
+    case RT_VO:
+    case BL_MODE:
+        if (record->event.pressed) {
+			rotary_mode = keycode;
+        }
+		return false;
+		break;
+
   }
   return true;
 }
@@ -170,18 +195,45 @@ void encoder_update_user(uint8_t index, bool clockwise) {
                 tap_code16(S(KC_TAB));
             }
         } else {
-            if (clockwise) {
-                tap_code(KC_VOLU);
-            } else {
-                tap_code(KC_VOLD);
-            }
-        }
-    }
-    else if (index == 1) {
-        if (clockwise) {
-            tap_code(KC_PGDN);
-        } else {
-            tap_code(KC_PGUP);
+			switch (rotary_mode) {
+				case BL_HU:
+					if (clockwise) {
+						rgblight_increase_hue();
+					} else {
+						rgblight_decrease_hue();
+					}
+					break;
+				case BL_SA:
+					if (clockwise) {
+						rgblight_increase_sat();
+					} else {
+						rgblight_decrease_sat();
+					}
+					break;
+				case BL_VA:
+					if (clockwise) {
+						rgblight_increase_val();
+					} else {
+						rgblight_decrease_val();
+					}
+					break;
+				case BL_MODE:
+					if (clockwise) {
+						rgblight_step();
+					} else {
+						rgblight_step_reverse();
+					}
+					break;
+				case RT_VO:
+					if (clockwise) {
+						tap_code(KC_VOLU);
+					} else {
+						tap_code(KC_VOLD);
+					}
+					break;
+				default:
+					break;
+			}
         }
     }
 }

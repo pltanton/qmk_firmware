@@ -51,7 +51,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //├────┼────┼────┼────┼────┼────┼────┐  ┌────┼────┼────┼────┼────┼────┼────┤
    LSFT, Z  , X  , C  , V  , B  ,DVRK,   TLYT, N  , M  ,COMM,DOT ,SLSH,RALT,
 //└────┴────┴────┴──┬─┴──┬─┴──┬─┴──┬─┘  └─┬──┴─┬──┴─┬──┴─┬──┴────┴────┴────┘
-                     LCTL,RASE,SPC ,       ENT ,LOWR,LGUI
+                     LCTL,LGUI,SPC ,       ENT ,LOWR,RASE
                  // └────┴────┴────┘      └────┴────┴────┘
   ),
 
@@ -65,7 +65,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //├────┼────┼────┼────┼────┼────┼────┐  ┌────┼────┼────┼────┼────┼────┼────┤
    LSFT,SCLN, Q  , J  , K  , X  ,QWRT,   TLYT, B  , M  , W  , V  , Z  ,RALT,
 //└────┴────┴────┴──┬─┴──┬─┴──┬─┴──┬─┘  └─┬──┴─┬──┴─┬──┴─┬──┴────┴────┴────┘
-                     LCTL,RASE,SPC ,       ENT ,LOWR,LGUI
+                     LCTL,LGUI,SPC ,       ENT ,LOWR,RASE
                  // └────┴────┴────┘      └────┴────┴────┘
   ),
 
@@ -93,7 +93,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      KC_MUTE, KC_MSTP, KC_MPLY, KC_VOLD, KC_PGDN, KC_MINS, KC_LPRN,          _______, KC_PLUS, KC_END,  RGB_HUD, RGB_SAD, RGB_VAD, _______,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                    KC_LGUI, _______, _______,                   _______, _______, _______
+                                    _______, _______, _______,                   _______, _______, _______
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
 
@@ -166,7 +166,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           set_single_persistent_default_layer(_DVORAK);
           is_dvorak = true;
         }
-        tap_code16(C(KC_SPC));
+        tap_code16(A(KC_SPC));
       }
       break;
   	case BL_HU:

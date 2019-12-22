@@ -166,7 +166,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           set_single_persistent_default_layer(_DVORAK);
           is_dvorak = true;
         }
-        tap_code16(A(KC_SPC));
+        tap_code16(KC_CAPS);
       }
       break;
   	case BL_HU:

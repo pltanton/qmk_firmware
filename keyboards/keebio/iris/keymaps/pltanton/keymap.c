@@ -1,5 +1,5 @@
+// vim: ts=2:sw=2
 #include QMK_KEYBOARD_H
-
 
 #define _QWERTY 0
 #define _DVORAK 1
@@ -8,6 +8,7 @@
 #define _ADJUST 4
 
 #define KC_____ KC_TRNS
+#define KC_RGBT RGB_TOG
 #define KC_QWRT QWERTY
 #define KC_DVRK DVORAK
 #define KC_TLYT TGLYT
@@ -15,6 +16,11 @@
 #define KC_RASE RAISE
 #define KC_RSET RESET
 #define KC_RGHT KC_RIGHT
+
+#define KC_DALT DALT
+#define KC_DGUI DGUI
+#define KC_DCTL DCTL
+#define KC_DSFT DSFT
 
 #define KC_BLHU BL_HU
 #define KC_BLSA BL_SA
@@ -30,6 +36,11 @@ enum custom_keycodes {
   ADJUST,
   TGLYT,
 
+  DALT,
+  DGUI,
+  DCTL,
+  DSFT,
+
   BL_HU,
   BL_SA,
   BL_VA,
@@ -38,6 +49,17 @@ enum custom_keycodes {
 };
 
 enum custom_keycodes rotary_mode = RT_VO;
+
+uint16_t getDModifier(enum custom_keycodes keycode) {
+  switch (keycode) {
+    case DALT: return KC_LALT;
+    case DGUI: return KC_LGUI;
+    case DCTL: return KC_LCTL;
+    case DSFT: return KC_LSFT;
+    default: return 0;
+  }
+  return 0;
+};
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -49,9 +71,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //├────┼────┼────┼────┼────┼────┤            ├────┼────┼────┼────┼────┼────┤
    GESC, A  , S  , D  , F  , G  ,              H  , J  , K  , L  ,SCLN,QUOT,
 //├────┼────┼────┼────┼────┼────┼────┐  ┌────┼────┼────┼────┼────┼────┼────┤
-   LSFT, Z  , X  , C  , V  , B  ,DVRK,   TLYT, N  , M  ,COMM,DOT ,SLSH,RALT,
+   DSFT, Z  , X  , C  , V  , B  ,DVRK,   TLYT, N  , M  ,COMM,DOT ,SLSH,RALT,
 //└────┴────┴────┴──┬─┴──┬─┴──┬─┴──┬─┘  └─┬──┴─┬──┴─┬──┴─┬──┴────┴────┴────┘
-                     LCTL,RGUI,SPC ,       ENT ,LOWR,RASE
+                     DCTL,DGUI,SPC ,       ENT ,LOWR,RASE
                  // └────┴────┴────┘      └────┴────┴────┘
   ),
 
@@ -83,18 +105,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                  // └────┴────┴────┘      └────┴────┴────┘
   ),
 
-  [_RAISE] = LAYOUT(
-  //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
-     KC_F12,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                              KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
-  //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     RGB_TOG, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                            KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, _______,
-  //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     RGB_MOD, KC_MPRV, KC_MNXT, KC_VOLU, KC_PGUP, KC_UNDS,                            KC_EQL,  KC_HOME, RGB_HUI, RGB_SAI, RGB_VAI, _______,
-  //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_MUTE, KC_MSTP, KC_MPLY, KC_VOLD, KC_PGDN, KC_MINS, KC_LPRN,          _______, KC_PLUS, KC_END,  RGB_HUD, RGB_SAD, RGB_VAD, _______,
-  //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                    _______, _______, _______,                   _______, _______, _______
-                                // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
+  [_RAISE] = LAYOUT_kc(
+//┌────┬────┬────┬────┬────┬────┐            ┌────┬────┬────┬────┬────┬────┐
+   F12 , F1 , F2 , F3 , F4 , F5 ,              F6 , F7 , F8 , F9 ,F10 ,F11 ,
+//├────┼────┼────┼────┼────┼────┤            ├────┼────┼────┼────┼────┼────┤
+   ____,____,____,____,____,____,             PSCR,____,____,____,____,____,
+//├────┼────┼────┼────┼────┼────┤            ├────┼────┼────┼────┼────┼────┤
+   ____,____,____,____,____,____,             INS ,____,____,____,____,____,
+//├────┼────┼────┼────┼────┼────┼────┐  ┌────┼────┼────┼────┼────┼────┼────┤
+   ____,____,____,____,____,____,____,   ____,____,____,____,____,____,____,
+//└────┴────┴────┴──┬─┴──┬─┴──┬─┴──┬─┘  └─┬──┴─┬──┴─┬──┴─┬──┴────┴────┴────┘
+                     ____,____,____,       ____,____,____
+                 // └────┴────┴────┘      └────┴────┴────┘
   ),
 
   [_ADJUST] = LAYOUT_kc(
@@ -103,7 +125,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //├────┼────┼────┼────┼────┼────┤            ├────┼────┼────┼────┼────┼────┤
    RSET,____,____,____,____,____,             ____,____,____,____,____,____,
 //├────┼────┼────┼────┼────┼────┤            ├────┼────┼────┼────┼────┼────┤
-   ____,____,____,____,____,____,             ____,____,____,____,____,____,
+   RGBT,____,____,____,____,____,             ____,____,____,____,____,____,
 //├────┼────┼────┼────┼────┼────┼────┐  ┌────┼────┼────┼────┼────┼────┼────┤
    RTVO,BLVA,BLHU,BLSA,BLMD,____,____,   ____,____,____,____,____,____,____,
 //└────┴────┴────┴──┬─┴──┬─┴──┬─┴──┬─┘  └─┬──┴─┬──┴─┬──┴─┬──┴────┴────┴────┘
@@ -115,6 +137,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 bool is_dvorak = true;
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
+    case DALT:
+    case DGUI:
+    case DCTL:
+    case DSFT:
+      if (record->event.pressed) {
+        layer_on(_DVORAK);
+        register_code(getDModifier(keycode));
+      } else {
+        layer_off(_DVORAK);
+        unregister_code(getDModifier(keycode));
+      }
+      return false;
+      break;
     case DVORAK:
       if (record->event.pressed) {
         set_single_persistent_default_layer(_DVORAK);

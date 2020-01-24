@@ -39,7 +39,6 @@ enum custom_keycodes {
   DALT,
   DGUI,
   DCTL,
-  DSFT,
 
   BL_HU,
   BL_SA,
@@ -55,7 +54,6 @@ uint16_t getDModifier(enum custom_keycodes keycode) {
     case DALT: return KC_LALT;
     case DGUI: return KC_LGUI;
     case DCTL: return KC_LCTL;
-    case DSFT: return KC_LSFT;
     default: return 0;
   }
   return 0;
@@ -71,7 +69,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //├────┼────┼────┼────┼────┼────┤            ├────┼────┼────┼────┼────┼────┤
    GESC, A  , S  , D  , F  , G  ,              H  , J  , K  , L  ,SCLN,QUOT,
 //├────┼────┼────┼────┼────┼────┼────┐  ┌────┼────┼────┼────┼────┼────┼────┤
-   DSFT, Z  , X  , C  , V  , B  ,DVRK,   TLYT, N  , M  ,COMM,DOT ,SLSH,RALT,
+   LSFT, Z  , X  , C  , V  , B  ,DVRK,   TLYT, N  , M  ,COMM,DOT ,SLSH,RALT,
 //└────┴────┴────┴──┬─┴──┬─┴──┬─┴──┬─┘  └─┬──┴─┬──┴─┬──┴─┬──┴────┴────┴────┘
                      DCTL,DGUI,SPC ,       ENT ,LOWR,RASE
                  // └────┴────┴────┘      └────┴────┴────┘
@@ -140,7 +138,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case DALT:
     case DGUI:
     case DCTL:
-    case DSFT:
       if (record->event.pressed) {
         layer_on(_DVORAK);
         register_code(getDModifier(keycode));

@@ -25,9 +25,12 @@
 
 #define KC_RGHU BL_HU
 #define KC_RGSA BL_SA
-#define KC_RGVA BL_VA
+#define KC_RGVA RG_VA
+#define KC_BLVA BL_VA
 #define KC_RGMD BL_MODE
 #define KC_RTVO RT_VO
+
+#define KC_XALT OSM(MOD_RALT)
 
 
 enum custom_keycodes {
@@ -45,6 +48,7 @@ enum custom_keycodes {
   BL_HU,
   BL_SA,
   BL_VA,
+  RG_VA,
   BL_MODE,
   RT_VO,
 };
@@ -53,7 +57,7 @@ enum custom_keycodes rotary_mode = RT_VO;
 
 uint16_t getDModifier(enum custom_keycodes keycode) {
   switch (keycode) {
-    case DALT: return KC_LALT;
+    case DALT: return KC_XALT;
     case DGUI: return KC_LGUI;
     case DCTL: return KC_LCTL;
     default: return 0;
@@ -71,10 +75,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //├────┼────┼────┼────┼────┼────┤            ├────┼────┼────┼────┼────┼────┤
    GESC, A  , S  , D  , F  , G  ,              H  , J  , K  , L  ,SCLN,QUOT,
 //├────┼────┼────┼────┼────┼────┼────┐  ┌────┼────┼────┼────┼────┼────┼────┤
-   LSFT, Z  , X  , C  , V  , B  ,DVRK,   TLYT, N  , M  ,COMM,DOT ,SLSH,RALT,
+   LSFT, Z  , X  , C  , V  , B  ,DVRK,   TLYT, N  , M  ,COMM,DOT ,SLSH,XALT,
 //└────┴────┴────┴──┬─┴──┬─┴──┬─┴──┬─┘  └─┬──┴─┬──┴─┬──┴─┬──┴────┴────┴────┘
-		     DCTL,DGUI,SPC ,       ENT ,LOWR,RASE
-		 // └────┴────┴────┘      └────┴────┴────┘
+                     DCTL,DGUI,SPC ,       ENT ,LOWR,RASE
+                 // └────┴────┴────┘      └────┴────┴────┘
   ),
 
   [_DVORAK] = LAYOUT_kc(
@@ -85,10 +89,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //├────┼────┼────┼────┼────┼────┤            ├────┼────┼────┼────┼────┼────┤
    GESC, A  , O  , E  , U  , I  ,              D  , H  , T  , N  , S  ,MINS,
 //├────┼────┼────┼────┼────┼────┼────┐  ┌────┼────┼────┼────┼────┼────┼────┤
-   LSFT,SCLN, Q  , J  , K  , X  ,QWRT,   TLYT, B  , M  , W  , V  , Z  ,RALT,
+   LSFT,SCLN, Q  , J  , K  , X  ,QWRT,   TLYT, B  , M  , W  , V  , Z  ,XALT,
 //└────┴────┴────┴──┬─┴──┬─┴──┬─┴──┬─┘  └─┬──┴─┬──┴─┬──┴─┬──┴────┴────┴────┘
-		     LCTL,RGUI,SPC ,       ENT ,LOWR,RASE
-		 // └────┴────┴────┘      └────┴────┴────┘
+                     LCTL,RGUI,SPC ,       ENT ,LOWR,RASE
+                 // └────┴────┴────┘      └────┴────┴────┘
   ),
 
   [_LOWER] = LAYOUT_kc(
@@ -101,22 +105,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //├────┼────┼────┼────┼────┼────┼────┐  ┌────┼────┼────┼────┼────┼────┼────┤
    ____,____,____,____,____,LBRC,____,   ____,RBRC,MINS,____,____,____,____,
 //└────┴────┴────┴──┬─┴──┬─┴──┬─┴──┬─┘  └─┬──┴─┬──┴─┬──┴─┬──┴────┴────┴────┘
-		     ____,____,DEL ,       DEL ,____,____
-		 // └────┴────┴────┘      └────┴────┴────┘
+                     ____,____,DEL ,       DEL ,____,____
+                 // └────┴────┴────┘      └────┴────┴────┘
   ),
 
   [_RAISE] = LAYOUT_kc(
 //┌────┬────┬────┬────┬────┬────┐            ┌────┬────┬────┬────┬────┬────┐
    F12 , F1 , F2 , F3 , F4 , F5 ,              F6 , F7 , F8 , F9 ,F10 ,F11 ,
 //├────┼────┼────┼────┼────┼────┤            ├────┼────┼────┼────┼────┼────┤
-   ____,____,____,____,____,____,             PSCR,____,____,____,____,____,
+   MPRV,MPLY,MSTP,MNXT,____,____,             PSCR,____,____,____,____,____,
 //├────┼────┼────┼────┼────┼────┤            ├────┼────┼────┼────┼────┼────┤
    ____,____,____,____,____,____,             INS ,____,____,____,____,____,
 //├────┼────┼────┼────┼────┼────┼────┐  ┌────┼────┼────┼────┼────┼────┼────┤
    ____,____,____,____,____,____,____,   ____,____,____,____,____,____,____,
 //└────┴────┴────┴──┬─┴──┬─┴──┬─┴──┬─┘  └─┬──┴─┬──┴─┬──┴─┬──┴────┴────┴────┘
-		     ____,____,____,       ____,____,____
-		 // └────┴────┴────┘      └────┴────┴────┘
+                     ____,____,____,       ____,____,____
+                 // └────┴────┴────┘      └────┴────┴────┘
   ),
 
   [_ADJUST] = LAYOUT_kc(
@@ -125,12 +129,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //├────┼────┼────┼────┼────┼────┤            ├────┼────┼────┼────┼────┼────┤
    BLTG,____,____,____,____,____,             ____,____,____,____,____,____,
 //├────┼────┼────┼────┼────┼────┤            ├────┼────┼────┼────┼────┼────┤
-   RGBT,____,____,____,____,____,             ____,____,____,____,____,____,
+   RGBT,BLVA,____,____,____,____,             ____,____,____,____,____,____,
 //├────┼────┼────┼────┼────┼────┼────┐  ┌────┼────┼────┼────┼────┼────┼────┤
    RTVO,RGVA,RGHU,RGSA,RGMD,____,____,   ____,____,____,____,____,____,____,
 //└────┴────┴────┴──┬─┴──┬─┴──┬─┴──┬─┘  └─┬──┴─┬──┴─┬──┴─┬──┴────┴────┴────┘
-		     ____,____,____,       ____,____,____
-		 // └────┴────┴────┘      └────┴────┴────┘
+                     ____,____,____,       ____,____,____
+                 // └────┴────┴────┘      └────┴────┴────┘
   )
 };
 
@@ -141,79 +145,79 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case DGUI:
     case DCTL:
       if (record->event.pressed) {
-	layer_on(_DVORAK);
-	register_code(getDModifier(keycode));
+        layer_on(_DVORAK);
+        register_code(getDModifier(keycode));
       } else {
-	layer_off(_DVORAK);
-	unregister_code(getDModifier(keycode));
+        layer_off(_DVORAK);
+        unregister_code(getDModifier(keycode));
       }
       return false;
       break;
     case DVORAK:
       if (record->event.pressed) {
-	set_single_persistent_default_layer(_DVORAK);
-	is_dvorak = true;
+        set_single_persistent_default_layer(_DVORAK);
+        is_dvorak = true;
       }
       return false;
       break;
     case QWERTY:
       if (record->event.pressed) {
-	set_single_persistent_default_layer(_QWERTY);
-	is_dvorak = false;
+        set_single_persistent_default_layer(_QWERTY);
+        is_dvorak = false;
       }
       return false;
       break;
     case LOWER:
       if (record->event.pressed) {
-	layer_on(_LOWER);
-	update_tri_layer(_LOWER, _RAISE, _ADJUST);
+        layer_on(_LOWER);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
       } else {
-	layer_off(_LOWER);
-	update_tri_layer(_LOWER, _RAISE, _ADJUST);
+        layer_off(_LOWER);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
       }
       return false;
       break;
     case RAISE:
       if (record->event.pressed) {
-	layer_on(_RAISE);
-	update_tri_layer(_LOWER, _RAISE, _ADJUST);
+        layer_on(_RAISE);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
       } else {
-	layer_off(_RAISE);
-	update_tri_layer(_LOWER, _RAISE, _ADJUST);
+        layer_off(_RAISE);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
       }
       return false;
       break;
     case ADJUST:
       if (record->event.pressed) {
-	layer_on(_ADJUST);
+        layer_on(_ADJUST);
       } else {
-	layer_off(_ADJUST);
+        layer_off(_ADJUST);
       }
       return false;
       break;
     case TGLYT:
       if (record->event.pressed) {
-	if (is_dvorak) {
-	  set_single_persistent_default_layer(_QWERTY);
-	  is_dvorak = false;
-	} else {
-	  set_single_persistent_default_layer(_DVORAK);
-	  is_dvorak = true;
-	}
-	tap_code16(KC_CAPS);
+        if (is_dvorak) {
+          set_single_persistent_default_layer(_QWERTY);
+          is_dvorak = false;
+        } else {
+          set_single_persistent_default_layer(_DVORAK);
+          is_dvorak = true;
+        }
+        tap_code16(KC_CAPS);
       }
       break;
-	case BL_HU:
-	case BL_SA:
-	case BL_VA:
+    case BL_HU:
+    case BL_SA:
+    case BL_VA:
+    case RG_VA:
     case RT_VO:
     case BL_MODE:
-	if (record->event.pressed) {
-			rotary_mode = keycode;
-	}
-		return false;
-		break;
-
+      if (record->event.pressed) {
+        rotary_mode = keycode;
+      }
+      return false;
+      break;
   }
   return true;
 }
@@ -221,53 +225,60 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #define MODS_GUI (get_mods() & MOD_BIT(KC_LGUI) || get_mods() & MOD_BIT(KC_RGUI))
 
 void encoder_update_user(uint8_t index, bool clockwise) {
-    if (index == 0) {
-	if (MODS_GUI) {
-	    if (clockwise) {
-		tap_code(KC_TAB);
-	    } else {
-		tap_code16(S(KC_TAB));
-	    }
-	} else {
-	   switch (rotary_mode) {
-		   case BL_HU:
-			   if (clockwise) {
-				   rgblight_increase_hue();
-			   } else {
-				   rgblight_decrease_hue();
-			   }
-			   break;
-		   case BL_SA:
-			   if (clockwise) {
-				   rgblight_increase_sat();
-			   } else {
-				   rgblight_decrease_sat();
-			   }
-			   break;
-		   case BL_VA:
-			   if (clockwise) {
-				   rgblight_increase_val();
-			   } else {
-				   rgblight_decrease_val();
-			   }
-			   break;
-		   case BL_MODE:
-			   if (clockwise) {
-				   rgblight_step();
-			   } else {
-				   rgblight_step_reverse();
-			   }
-			   break;
-		   case RT_VO:
-			   if (clockwise) {
-				   tap_code(KC_VOLU);
-			   } else {
-				   tap_code(KC_VOLD);
-			   }
-			   break;
-		   default:
-			   break;
-	   }
-	}
-    }
+  if (index == 0) {
+      if (MODS_GUI) {
+          if (clockwise) {
+              tap_code(KC_TAB);
+          } else {
+              tap_code16(S(KC_TAB));
+          }
+      } else {
+         switch (rotary_mode) {
+           case BL_VA:
+             if (clockwise) {
+               backlight_increase();
+             } else {
+               backlight_decrease();
+             }
+             break;
+           case BL_HU:
+             if (clockwise) {
+               rgblight_increase_hue();
+             } else {
+               rgblight_decrease_hue();
+             }
+             break;
+           case BL_SA:
+             if (clockwise) {
+               rgblight_increase_sat();
+             } else {
+               rgblight_decrease_sat();
+             }
+             break;
+           case RG_VA:
+             if (clockwise) {
+               rgblight_increase_val();
+             } else {
+               rgblight_decrease_val();
+             }
+             break;
+           case BL_MODE:
+             if (clockwise) {
+               rgblight_step();
+             } else {
+               rgblight_step_reverse();
+             }
+             break;
+           case RT_VO:
+             if (clockwise) {
+               tap_code(KC_VOLU);
+             } else {
+               tap_code(KC_VOLD);
+             }
+             break;
+           default:
+             break;
+         }
+      }
+  }
 }
